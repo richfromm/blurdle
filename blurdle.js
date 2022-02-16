@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Blurdle
 // @namespace    http://tampermonkey.net/
-// @version      0.3
-// @description  Remove Wordle sharing posts from a facebook feed
+// @version      0.4
+// @description  Remove Wordle sharing posts from a Facebook feed
 // @author       Rich Fromm
 // @match        http*://facebook.com/*
 // @match        http*://www.facebook.com/*
@@ -26,12 +26,15 @@
 
         //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle')")).remove();
         //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle 242 3')")).remove();
-        $("div[data-pagelet^='FeedUnit_']")
+        var filtered = $("div[data-pagelet^='FeedUnit_']")
             .filter($("div:contains('Wordle')"))
             .filter(function(){
                return this.innerHTML.match(/Wordle\s+\d+\s+\d+\/\d+/);
             })
-            .remove()
+        if (filtered.length > 0) {
+            console.log(`Removed ${filtered.length} Wordle sharing posts from Facebook feed`);
+            filtered.remove();
+        }
 
         console.log("End Blurdle filter");
     }

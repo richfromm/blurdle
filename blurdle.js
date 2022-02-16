@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Anti Wordle
+// @name         Blurdle
 // @namespace    http://tampermonkey.net/
 // @version      0.3
-// @description  Remove wordle posts from a facebook feed
+// @description  Remove Wordle sharing posts from a facebook feed
 // @author       Rich Fromm
 // @match        http*://facebook.com/*
 // @match        http*://www.facebook.com/*
@@ -13,16 +13,16 @@
 
 (function() {
     'use strict';
-    console.log("Begin Anti Wordle setup");
+    console.log("Begin Blurdle setup");
 
     // Filter the news feed every second
     //setInterval(filter, 1000);
     setInterval(filter, 5000);
 
-    console.log("End Anti Wordle setup");
+    console.log("End Blurdle setup");
 
     function filter() {
-        console.log("Begin filter");
+        console.log("Begin Blurdle filter");
 
         //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle')")).remove();
         //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle 242 3')")).remove();
@@ -33,6 +33,6 @@
             })
             .remove()
 
-        console.log("End filter");
+        console.log("End Blurdle filter");
     }
 })();

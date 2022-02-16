@@ -14,6 +14,9 @@
 (function() {
     'use strict';
     console.log("Begin Blurdle setup");
+    console.debug("this is a debug test");
+    console.info("this is a info test");
+    console.log("this is a log test");
 
     // Filter the news feed every second
     //setInterval(filter, 1000);

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Blurdle
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/richfromm/
 // @version      0.4
 // @description  Remove Wordle sharing posts from a Facebook feed
 // @author       Rich Fromm
@@ -16,24 +16,23 @@
 
     console.info("Begin Blurdle setup");
 
-    // Filter the news feed every second
-    //setInterval(filter, 1000);
-    setInterval(filter, 5000);
+    // How often to apply filter to infinitely scrolling news feed.
+    // Longer times can be useful for debugging.
+    var freqSeconds = 1;
+    setInterval(filter, freqSeconds * 1000);
 
-    console.info("End Blurdle setup");
+    console.info(`End Blurdle setup, will filter Facebook feed every ${freqSeconds} second(s)`);
 
     function filter() {
         console.debug("Begin Blurdle filter");
 
-        //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle')")).remove();
-        //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle 242 3')")).remove();
         var filtered = $("div[data-pagelet^='FeedUnit_']")
             .filter($("div:contains('Wordle')"))
             .filter(function(){
                return this.innerHTML.match(/Wordle\s+\d+\s+\d+\/\d+/);
             })
         if (filtered.length > 0) {
-            console.info(`Removed ${filtered.length} Wordle sharing posts from Facebook feed`);
+            console.info(`Removed ${filtered.length} Wordle sharing post(s) from Facebook feed`);
             filtered.remove();
         }
 

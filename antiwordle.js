@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Anti Wordle
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Remove wordle posts from a facebook feed
 // @author       Rich Fromm
 // @match        http*://facebook.com/*
@@ -24,7 +24,14 @@
     function filter() {
         console.log("Begin filter");
 
-        $("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle')")).remove();
+        //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle')")).remove();
+        //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle 242 3')")).remove();
+        $("div[data-pagelet^='FeedUnit_']")
+            .filter($("div:contains('Wordle')"))
+            .filter(function(){
+               return this.innerHTML.match(/Wordle\s+\d+\s+\d+\/\d+/);
+            })
+            .remove()
 
         console.log("End filter");
     }

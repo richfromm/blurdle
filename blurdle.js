@@ -13,19 +13,17 @@
 
 (function() {
     'use strict';
-    console.log("Begin Blurdle setup");
-    console.debug("this is a debug test");
-    console.info("this is a info test");
-    console.log("this is a log test");
+
+    console.info("Begin Blurdle setup");
 
     // Filter the news feed every second
     //setInterval(filter, 1000);
     setInterval(filter, 5000);
 
-    console.log("End Blurdle setup");
+    console.info("End Blurdle setup");
 
     function filter() {
-        console.log("Begin Blurdle filter");
+        console.debug("Begin Blurdle filter");
 
         //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle')")).remove();
         //$("div[data-pagelet^='FeedUnit_']").filter($("div:contains('Wordle 242 3')")).remove();
@@ -35,10 +33,10 @@
                return this.innerHTML.match(/Wordle\s+\d+\s+\d+\/\d+/);
             })
         if (filtered.length > 0) {
-            console.log(`Removed ${filtered.length} Wordle sharing posts from Facebook feed`);
+            console.info(`Removed ${filtered.length} Wordle sharing posts from Facebook feed`);
             filtered.remove();
         }
 
-        console.log("End Blurdle filter");
+        console.debug("End Blurdle filter");
     }
 })();

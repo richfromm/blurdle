@@ -95,3 +95,32 @@ JavaScript is extremely limited, and this was my first time writing a
 user script, as well as my first time using JQuery. I suspect that
 this might not be the most efficient solution, and I'm happy to accept
 suggestions for improvement.
+
+**UPDATE:** (2022-03-08) It's broken for me as of today. That didn't
+take too long (about 3 weeks).
+
+The `<div>` tags that contain each item in the new feed no longer have
+a `data-pagelet` attribute that starts with `FeedUnit_`. In fact, they
+no longer have any attributes at all.
+
+I need to think about how to handle this (see above, I'm not a JS
+guy), and I don't have the time just right now. Hopefully somewhat
+soonish. Suggestions welcome, if there's anyone out there actually
+reading this.
+
+I suppose I could take advantage of the fact that the next two levels
+in the hierarchy of `<div>` insanity (immediately after the level that
+formerly contained the `data-pagelet` attribute) have precisely the
+following attributes:
+
+```
+                     <div class="du4w35lb k4urcfbm l9j0dhe7 sjgh65i0">
+                      <div class="du4w35lb l9j0dhe7">
+```
+
+But wow that would take the fragility of this implementation to a
+whole new level.
+
+And who knows, maybe I'm just part of some A/B test, and tomorrow the
+HTML of my feed will return to what it was yesterday, and this will
+start working again.

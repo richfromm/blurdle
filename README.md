@@ -99,7 +99,7 @@ suggestions for improvement.
 **UPDATE:** (2022-03-08) It's broken for me as of today. That didn't
 take too long (about 3 weeks).
 
-The `<div>` tags that contain each item in the new feed no longer have
+The `<div>` tags that contain each item in the news feed no longer have
 a `data-pagelet` attribute that starts with `FeedUnit_`. In fact, they
 no longer have any attributes at all.
 

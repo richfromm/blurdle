@@ -45,8 +45,11 @@ opportunity to learn. Hence this quick hack.
 
 ## How
 
-I took a look at the source of a sample page with a Wordle post in the feed. Each
-post seems to be a very heavily nested sequence of `<div>` tags. I saw:
+### First pass
+
+Originally, I took a look at the source of a sample page with a Wordle
+post in the feed. Each post seemed to be a very heavily nested
+sequence of `<div>` tags. I saw:
 ```
                     <div data-pagelet="FeedUnit_0">
 ```
@@ -70,7 +73,7 @@ share:
                                      </div>
 ```
 
-I use [JQuery](https://jquery.com/) to find `<div>` tags with a
+I used [JQuery](https://jquery.com/) to find `<div>` tags with a
 `data-pagelet` attribute that starts with `FeedUnit_`. They are
 further filtered to only return ones that have some nested `<div>` tag
 that contains `Wordle`. But I didn't want to delete any post
@@ -84,43 +87,45 @@ dynamically. So we can't just filter a fixed document and call it a
 day. The actual filtering is contained in a function `filter()`,
 that's called on the current page contents once a second.
 
+### Update
+
+This worked great, for about 3 weeks. As I had anticipated might
+happen (but maybe a bit sooner than I had hoped), the Facebook output
+changed for me on 2022-03-08, breaking my script.
+
+The `<div>` tags that contain each item in the news feed no longer have
+a `data-pagelet` attribute that starts with `FeedUnit_`. In fact, they
+no longer have any attributes at all.
+
+The next two levels in the hierarchy of `<div>` insanity (immediately
+after the level that formerly contained the `data-pagelet` attribute)
+have precisely the following attributes:
+```
+                     <div class="du4w35lb k4urcfbm l9j0dhe7 sjgh65i0">
+                      <div class="du4w35lb l9j0dhe7">
+```
+
+So that's what I'm using now. Well, at least the first line. I search
+for all `<div>` tags with precisely that `class` attribute, then
+filter for Wordle posts like before, and finally take their parent
+tags (the `<div>` tags that now have no attributes) and remove them.
+
 ## Caveats
 
-Like any kind of screen scraping, this is inherently fragile. If
-either Facebook or Wordle makes changes to their output format, it
-could easily break.
+As I mentioned when I first posted this, like any kind of screen
+scraping, this is inherently fragile. If either Facebook or Wordle
+makes changes to their output format, it can easily break, and already
+has.
+
+The update takes the fragility of this implementation to a whole new
+level. However, the specific class attribute that I am now selecting
+upon was present in the exact same form even before the breakage, and
+it continues to be present unchanged as of this writing, which is 3
+months after the breakage. So maybe I'll get lucky and this will last
+a bit longer this time.
 
 I am a software developer, but not a front end guy. My experience with
 JavaScript is extremely limited, and this was my first time writing a
 user script, as well as my first time using JQuery. I suspect that
 this might not be the most efficient solution, and I'm happy to accept
 suggestions for improvement.
-
-**UPDATE:** (2022-03-08) It's broken for me as of today. That didn't
-take too long (about 3 weeks).
-
-The `<div>` tags that contain each item in the news feed no longer have
-a `data-pagelet` attribute that starts with `FeedUnit_`. In fact, they
-no longer have any attributes at all.
-
-I need to think about how to handle this (see above, I'm not a JS
-guy), and I don't have the time just right now. Hopefully somewhat
-soonish. Suggestions welcome, if there's anyone out there actually
-reading this.
-
-I suppose I could take advantage of the fact that the next two levels
-in the hierarchy of `<div>` insanity (immediately after the level that
-formerly contained the `data-pagelet` attribute) have precisely the
-following attributes:
-
-```
-                     <div class="du4w35lb k4urcfbm l9j0dhe7 sjgh65i0">
-                      <div class="du4w35lb l9j0dhe7">
-```
-
-But wow that would take the fragility of this implementation to a
-whole new level.
-
-And who knows, maybe I'm just part of some A/B test, and tomorrow the
-HTML of my feed will return to what it was yesterday, and this will
-start working again.

@@ -110,6 +110,57 @@ for all `<div>` tags with precisely that `class` attribute, then
 filter for Wordle posts like before, and finally take their parent
 tags (the `<div>` tags that now have no attributes) and remove them.
 
+### Latest Update
+
+**As of this writing (2022-08-19), this is broken again.**
+
+At least it lasted a bit longer this time, a bit more than 2 months.
+
+The structure is now similar to the previous update, but the specifics
+of the classes have changed. Each news feed post now starts with the
+following:
+
+```
+                     <div class="b6ax4al1">
+                      <div>
+                       <div class="g4tp4svg mfclru0v om3e55n1 p8bdhjjv">
+                        <div class="g4tp4svg om3e55n1">
+```
+
+I could likely get this to work (and may do so as a first pass) just
+by changing the beginning of my `div` filter to look for
+`class='b6ax4al1'`. But it would be nice if this were a little less
+fragile.
+
+A better approach may be to take advantage of the fact that the top of
+the news feed looks something like this:
+
+```
+                    <div role="feed">
+                     <h3 class="..." dir="auto">
+                      News Feed posts
+                     </h3>
+```
+
+Not precisely, as I've left out the `class` attribute of the `<h3>`
+tag, and it has changed over time.
+
+It would be a bit more robust to search for the enclosing `<div>` tag
+with the `role="feed"` attribute, and/or the `<h3>` tag with the text
+`News Feed posts`, then assume that the next subsequent `<div>` tag
+lower in the hierarchy with a non-empty `class` attribute can be used
+as the signaling key for the beginning of a news feed post.
+
+The `News Feed posts` text might be more fragile than the
+`role="feed"` attribute. Somewhat interestingly, I don't actually see
+that text header visible anywhere in my browser window (Google Chrome
+on Mac OS), although the Find function (via Cmd-F) is able to locate a
+single occurrence of it. I wonder if the lack of visibility makes it
+more or less likely to change its text.
+
+I hope to get a chance to work on this soon. Right now I need to get
+back to [looking for a job](https://www.linkedin.com/in/rich-fromm/).
+
 ## Caveats
 
 As I mentioned when I first posted this, like any kind of screen
